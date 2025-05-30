@@ -1,0 +1,86 @@
+-- Create ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "StealCharacterUI"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Main Frame
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 200, 0, 240)
+mainFrame.Position = UDim2.new(0, 30, 0.5, -120)
+mainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+mainFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+mainFrame.BorderSizePixel = 3
+mainFrame.Parent = screenGui
+
+-- UICorner for rounded edges
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 6)
+corner.Parent = mainFrame
+
+-- Button/TextBox helper
+local function createButton(text, yPos)
+	local button = Instance.new("TextButton")
+	button.Size = UDim2.new(0, 160, 0, 30)
+	button.Position = UDim2.new(0, 20, 0, yPos)
+	button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+	button.TextColor3 = Color3.fromRGB(255, 255, 255)
+	button.Font = Enum.Font.SourceSansBold
+	button.Text = text
+	button.TextScaled = true
+	button.Parent = mainFrame
+
+	local btnCorner = Instance.new("UICorner")
+	btnCorner.CornerRadius = UDim.new(0, 4)
+	btnCorner.Parent = button
+
+	return button
+end
+
+-- Toggle Buttons
+local collectCashBtn = createButton("Collect Cash ✔", 10)
+local lockStudioBtn = createButton("Lock Studio (30K) ✔", 45)
+
+-- Action Buttons
+local completeStealsBtn = createButton("Complete Steals", 80)
+local removeWallsBtn = createButton("Remove Walls", 115)
+
+-- Walk Speed UI
+local walkLabel = Instance.new("TextLabel")
+walkLabel.Text = "Walk Speed"
+walkLabel.Size = UDim2.new(0, 100, 0, 30)
+walkLabel.Position = UDim2.new(0, 20, 0, 155)
+walkLabel.BackgroundTransparency = 1
+walkLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+walkLabel.Font = Enum.Font.SourceSansBold
+walkLabel.TextScaled = true
+walkLabel.Parent = mainFrame
+
+local walkInput = Instance.new("TextBox")
+walkInput.Size = UDim2.new(0, 60, 0, 30)
+walkInput.Position = UDim2.new(0, 120, 0, 155)
+walkInput.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+walkInput.Text = "57"
+walkInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+walkInput.Font = Enum.Font.SourceSans
+walkInput.TextScaled = true
+walkInput.ClearTextOnFocus = false
+walkInput.Parent = mainFrame
+
+local inputCorner = Instance.new("UICorner")
+inputCorner.CornerRadius = UDim.new(0, 4)
+inputCorner.Parent = walkInput
+
+-- Functionality Example: change walkspeed
+walkInput.FocusLost:Connect(function(enterPressed)
+	if enterPressed then
+		local speed = tonumber(walkInput.Text)
+		if speed then
+			local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
+			local humanoid = character:FindFirstChildOfClass("Humanoid")
+			if humanoid then
+				humanoid.WalkSpeed = speed
+			end
+		end
+	end
+end)
