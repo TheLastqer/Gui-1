@@ -37,6 +37,13 @@ local function createButton(text, yPos)
 	return button
 end
 
+-- draggable functionality
+mainFrame.Active = true
+mainFrame.Draggable = true
+mainFrame.MouseButton1Down:Connect(function()
+    mainFrame.Draggable = true
+end)
+
 -- Toggle Buttons
 local collectCashBtn = createButton("Collect Cash ✔", 10)
 local lockStudioBtn = createButton("Lock Studio (30K) ✔", 45)
