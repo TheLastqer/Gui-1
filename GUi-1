@@ -12,6 +12,8 @@ mainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 mainFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
 mainFrame.BorderSizePixel = 3
 mainFrame.Parent = screenGui
+mainFrame.Active = true
+mainFrame.Draggable = true
 
 -- UICorner for rounded edges
 local corner = Instance.new("UICorner")
